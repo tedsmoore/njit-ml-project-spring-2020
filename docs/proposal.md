@@ -4,7 +4,6 @@
 
 > Using Bollinger Bands, Moving Average Envelope (MAE) as the basis or control, can we introduce other attributes, features, even applying Autoencoder or PCA, LDA to refine, replace, eliminate, or combine features to improve the models for predictive capabilities.
 
-
 ## Method
 
 ### Data aquisition and choice
@@ -15,7 +14,7 @@
 ### Feature selection
 - Examine use of Autoencoders
 - Examine use of GANS for Adverserial Training of competing NNs
-- With exsiting or generated features, use Dimensonality Reduction via PCA or LDA for feature 
+- With existing or generated features, use Dimensonality Reduction via PCA or LDA for features
 - Inversions, type of inversions, duration, magnitude, etc.
 
 
