@@ -17,10 +17,21 @@ class BuildFeatures(strategy.BacktestingStrategy):
         strategy.BacktestingStrategy.__init__(self, feed)
         self.instrument = instrument
         self.sma = ma.SMA(feed[instrument].getAdjCloseDataSeries(), 15)
+        self.sma_slope = linreg.Slope(self.sma, 15)
+        self.sma_second_deriv = linreg.Slope(self.sma_slope, 3)
         self.ema = ma.EMA(feed[instrument].getAdjCloseDataSeries(), 15)
+        self.ema_slope = linreg.Slope(self.ema, 15)
         self.adj_close = feed[instrument].getAdjCloseDataSeries()
-        self.adj_close_slope = linreg.Slope(feed[instrument].getAdjCloseDataSeries(), 15)
-        self.cols = ["Date", "Ticker", "Adj Close", "SMA15", "Adj Close - SMA15", "Adj Close - EMA15"]
+        self.adj_close_slope = linreg.Slope(self.adj_close, 15)
+        self.cols = ["Date",
+                     "Ticker",
+                     "Adj Close",
+                     "Adj Close - Slope15",
+                     "SMA15",
+                     "Adj Close - SMA15",
+                     "SMA15 - Slope15",
+                     "SMA15 - Slope 15 - 2nd Deriv 3",
+                     "Adj Close - EMA15"]
         self.features = pd.DataFrame(columns=self.cols)
 
     # Signals (Features)
@@ -71,8 +82,11 @@ class BuildFeatures(strategy.BacktestingStrategy):
             bar.getDateTime(),
             self.instrument,
             bar.getAdjClose(),
+            self.adj_close_slope[-1],
             self.sma[-1],
             self.adj_close_diff_sma(bar),
+            self.sma_slope[-1],
+            self.sma_second_deriv[-1],
             self.adj_close_diff_ema(bar)
         ]],
             columns=self.cols)
