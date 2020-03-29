@@ -5,7 +5,8 @@ from pyalgotrade.technical import ma, linreg
 
 class BuildFeatures(strategy.BacktestingStrategy):
     """
-    Construct indicators from various stock analysis techniques and generate labels for training data
+    Construct features (and labels for training) of stock market indicators from daily CSV files
+    using various stock analysis techniques
 
     Example usage:
     b = BuildFeatures()
