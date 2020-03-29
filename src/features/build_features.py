@@ -11,6 +11,7 @@ class BuildFeatures(strategy.BacktestingStrategy):
     b = BuildFeatures()
     X, y = b.run()
     """
+
     def __init__(self, feed, instrument):
         strategy.BacktestingStrategy.__init__(self, feed)
         self.instrument = instrument
@@ -21,8 +22,7 @@ class BuildFeatures(strategy.BacktestingStrategy):
         self.cols = ["Date", "Ticker", "Adj Close", "SMA15", "Adj Close - SMA15", "Adj Close - EMA15"]
         self.features = pd.DataFrame(columns=self.cols)
 
-
-    ### Signals (Features)
+    # Signals (Features)
 
     def adj_close_diff_sma(self, bar):
         try:
@@ -36,8 +36,7 @@ class BuildFeatures(strategy.BacktestingStrategy):
         except TypeError:
             return None
 
-
-    ### Buy/Sell Conditions (Labels)
+    # Buy/Sell Conditions (Labels)
 
     def stock_will_rise(self, days=1):
         return [1 if val > 0 else 0 for val in self._future_chg_adj_close(days)]
@@ -54,14 +53,15 @@ class BuildFeatures(strategy.BacktestingStrategy):
 
     def _future_chg_sma(self, days=15, sma_days=15):
         future_change = [self.sma[idx + sma_days + days] - self.sma[idx + sma_days] for idx, _
-                              in enumerate(self.sma[sma_days:len(self.sma) - days])]
+                         in enumerate(self.sma[sma_days:len(self.sma) - days])]
         return future_change
 
     def stock_up_by_pct(self, bars, pct, num_days):
+        # work in progress
         today = bars[self.instrument].getAdj
+        return None
 
-
-    ### Overrides (do the dataset building)
+    # Overrides (do the dataset building)
 
     def onBars(self, bars):
         bar = bars[self.instrument]
@@ -78,7 +78,7 @@ class BuildFeatures(strategy.BacktestingStrategy):
         self.features = self.features.append(technicals, ignore_index=True)
 
     def onFinish(self, bars):
-        self.labels = pd.DataFrame(self.sma_will_rise(), columns=["Label"])
+        labels = pd.DataFrame(self.sma_will_rise(), columns=["Label"])
         dataset = pd.concat([self.features, self.labels], axis=1)
         print(dataset.tail())
-        return self.featuers, self.labels
+        return self.featuers, labels
