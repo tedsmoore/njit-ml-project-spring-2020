@@ -82,4 +82,4 @@ class BuildFeatures(strategy.BacktestingStrategy):
         labels = pd.DataFrame(self.sma_will_rise(), columns=["Label"])
         dataset = pd.concat([self.features, labels], axis=1)
         print(dataset.tail())
-        return self.featuers, labels
+        return self.features, labels
