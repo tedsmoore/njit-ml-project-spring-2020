@@ -118,4 +118,31 @@ class BuildFeatures(strategy.BacktestingStrategy):
             ])
         dataset = pd.concat([self.features, self.labels], axis=1)
         print(dataset.tail())
-        return self.features, labels
+
+
+class CrystalBallStrategy(strategy.BacktestingStrategy):
+    """
+    A class to test (unrealistic) strategies based on future information fed in as future_signals
+    :param future_signals: Array-like series of signals of the same length as the feed on which to trade
+    """
+
+    def __init__(self, feed, instrument, future_signals):
+        strategy.BacktestingStrategy.__init__(self, feed)
+        self.instrument = instrument
+        self.future_signals = future_signals
+        self.adj_close = feed[instrument].getAdjCloseDataSeries()
+
+    def onStart(self):
+        # self.enterLong('MSFT', 100)
+        pass
+
+    def onBars(self, bars):
+        try:
+            todays_signal = self.future_signals.iloc[len(self.adj_close) - 1]
+            yesterdays_signal = self.future_signals.iloc[len(self.adj_close) - 2]
+            if todays_signal > yesterdays_signal:
+                self.enterLong('MSFT', 100)
+            elif todays_signal < yesterdays_signal:
+                self.enterShort('MSFT', 100)
+        except IndexError as e:
+            pass
