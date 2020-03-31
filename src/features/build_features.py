@@ -35,6 +35,7 @@ class BuildFeatures(strategy.BacktestingStrategy):
                      "SMA15 - Slope 15 - 2nd Deriv 3",
                      "Adj Close - EMA15"]
         self.features = pd.DataFrame(columns=self.cols)
+        self.labels = None
 
     # Signals (Features)
 
@@ -104,7 +105,14 @@ class BuildFeatures(strategy.BacktestingStrategy):
         self.features = self.features.append(technicals, ignore_index=True)
 
     def onFinish(self, bars):
-        labels = pd.DataFrame(self.future_sma_higher_than_current_price(), columns=["Label"])
-        dataset = pd.concat([self.features, labels], axis=1)
+        self.labels = pd.DataFrame(zip(
+            self.price_will_rise(),
+            self.future_sma_higher_than_current_price()
+        ),
+            columns=[
+                "1 Day Close",
+                "15 Days SMA v Close"
+            ])
+        dataset = pd.concat([self.features, self.labels], axis=1)
         print(dataset.tail())
         return self.features, labels
