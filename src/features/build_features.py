@@ -87,6 +87,9 @@ class BuildFeatures(strategy.BacktestingStrategy):
 
     # Overrides (do the dataset building)
 
+    def onStart(self):
+        self.enterLong('MSFT', 100)
+
     def onBars(self, bars):
         bar = bars[self.instrument]
         # build up this list of signal features
