@@ -16,13 +16,15 @@ class BuildFeatures(strategy.BacktestingStrategy):
     def __init__(self, feed, instrument):
         strategy.BacktestingStrategy.__init__(self, feed)
         self.instrument = instrument
+
+        # Signals (Features)
         self.sma = ma.SMA(feed[instrument].getAdjCloseDataSeries(), 15)
-        self.sma_slope = linreg.Slope(self.sma, 15)
+        self.sma_slope = linreg.Slope(self.sma, 7)
         self.sma_second_deriv = linreg.Slope(self.sma_slope, 3)
         self.ema = ma.EMA(feed[instrument].getAdjCloseDataSeries(), 15)
-        self.ema_slope = linreg.Slope(self.ema, 15)
+        self.ema_slope = linreg.Slope(self.ema, 7)
         self.adj_close = feed[instrument].getAdjCloseDataSeries()
-        self.adj_close_slope = linreg.Slope(self.adj_close, 15)
+        self.adj_close_slope = linreg.Slope(self.adj_close, 7)
         self.cols = ["Date",
                      "Ticker",
                      "Adj Close",
@@ -50,13 +52,17 @@ class BuildFeatures(strategy.BacktestingStrategy):
 
     # Buy/Sell Conditions (Labels)
 
-    def stock_will_rise(self, days=1):
+    def price_will_rise(self, days=1):
         return [1 if val > 0 else 0 for val in self._future_chg_adj_close(days)]
 
     def sma_will_rise(self, days=15, sma_days=15):
         future_change = [None for _ in range(sma_days)]
         future_change.extend([1 if val > 0 else 0 for val in self._future_chg_sma(days)])
         return future_change
+
+    def future_sma_higher_than_current_price(self, days=15, sma_days=15):
+        # This metric is the most promising as far as an investment strategy
+        return [1 if val > 0 else 0 for val in self._future_sma_v_price()]
 
     def _future_chg_adj_close(self, days=1):
         future_change = [self.adj_close[idx + days] - close for idx, close
@@ -66,6 +72,11 @@ class BuildFeatures(strategy.BacktestingStrategy):
     def _future_chg_sma(self, days=15, sma_days=15):
         future_change = [self.sma[idx + sma_days + days] - self.sma[idx + sma_days] for idx, _
                          in enumerate(self.sma[sma_days:len(self.sma) - days])]
+        return future_change
+
+    def _future_sma_v_price(self, days=15):
+        future_change = [self.sma[idx + days] - close for idx, close
+                        in enumerate(self.adj_close[:len(self.adj_close) - days])]
         return future_change
 
     def stock_up_by_pct(self, bars, pct, num_days):
@@ -93,7 +104,7 @@ class BuildFeatures(strategy.BacktestingStrategy):
         self.features = self.features.append(technicals, ignore_index=True)
 
     def onFinish(self, bars):
-        labels = pd.DataFrame(self.sma_will_rise(), columns=["Label"])
+        labels = pd.DataFrame(self.future_sma_higher_than_current_price(), columns=["Label"])
         dataset = pd.concat([self.features, labels], axis=1)
         print(dataset.tail())
         return self.features, labels
