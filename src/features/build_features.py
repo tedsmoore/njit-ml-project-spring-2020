@@ -141,8 +141,8 @@ class CrystalBallStrategy(strategy.BacktestingStrategy):
             todays_signal = self.future_signals.iloc[len(self.adj_close) - 1]
             yesterdays_signal = self.future_signals.iloc[len(self.adj_close) - 2]
             if todays_signal > yesterdays_signal:
-                self.enterLong('MSFT', 100)
+                self.enterLong(self.instrument, 100)
             elif todays_signal < yesterdays_signal:
-                self.enterShort('MSFT', 100)
-        except IndexError as e:
+                self.enterShort(self.instrument, 100)
+        except IndexError:
             pass
