@@ -19,6 +19,8 @@ pylint = "~=2.4.4"
 pyalgotrade = "^0.20"
 seaborn = "^0.10.0"
 pandas = "^1.0.3"
+talib-binary = "^0.4.19"
+requests = "^2.23.0"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^3.7.9"

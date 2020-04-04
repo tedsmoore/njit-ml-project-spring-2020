@@ -1026,6 +1026,17 @@ version = "1.14.0"
 
 [[package]]
 category = "main"
+description = "Python wrapper for TA-Lib"
+name = "talib-binary"
+optional = false
+python-versions = "*"
+version = "0.4.19"
+
+[package.dependencies]
+numpy = "*"
+
+[[package]]
+category = "main"
 description = "Terminals served to xterm.js using Tornado websockets"
 name = "terminado"
 optional = false
@@ -1176,7 +1187,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "89c23b31bb6d87aba209f99cff6c13a74b755b647cf25838ced84ed749c23658"
+content-hash = "9ebbcb7071a66daab898bb590324171e878e3ff8716e684ecd9d77a073c7f37b"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -1730,6 +1741,12 @@ send2trash = [
 six = [
     {file = "six-1.14.0-py2.py3-none-any.whl", hash = "sha256:8f3cd2e254d8f793e7f3d6d9df77b92252b52637291d0f0da013c76ea2724b6c"},
     {file = "six-1.14.0.tar.gz", hash = "sha256:236bdbdce46e6e6a3d61a337c0f8b763ca1e8717c03b369e87a7ec7ce1319c0a"},
+]
+talib-binary = [
+    {file = "talib_binary-0.4.19-cp34-cp34m-manylinux1_x86_64.whl", hash = "sha256:e2ad78ff29427daca3b3affab9be0d8bf510757d616d3fca6d7f4f45d82cc21a"},
+    {file = "talib_binary-0.4.19-cp35-cp35m-manylinux1_x86_64.whl", hash = "sha256:3896b555da9b4a0711ef5498d8d61ffe64a635439272b824c085a7814b5f2f39"},
+    {file = "talib_binary-0.4.19-cp36-cp36m-manylinux1_x86_64.whl", hash = "sha256:609c40d46c84aa9a2a11784ff3b9f6dd7172df0b980180e547f57a1a20cf65e4"},
+    {file = "talib_binary-0.4.19-cp37-cp37m-manylinux1_x86_64.whl", hash = "sha256:7926660bf91c1dd496f46dda88260ef0e7d8470e63988006a35676566d14e392"},
 ]
 terminado = [
     {file = "terminado-0.8.3-py2.py3-none-any.whl", hash = "sha256:a43dcb3e353bc680dd0783b1d9c3fc28d529f190bc54ba9a229f72fe6e7a54d7"},
