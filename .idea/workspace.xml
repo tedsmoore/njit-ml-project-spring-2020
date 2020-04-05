@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="e46262f3-d217-4ad1-93d3-d4d045981170" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/docs/examples/example-proposal.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/docs/examples/example-proposal.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/proposal-latex/figures/google-scholar.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/docs/proposal-latex/figures/google-scholar.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/proposal-latex/proposal.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/docs/proposal-latex/proposal.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/report-latex/figures/google-scholar.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/docs/report-latex/figures/google-scholar.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/report-latex/report.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/docs/report-latex/report.pdf" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1Zow5cYGGzTkggqsst2IQ3K1kqq" />
+  <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
