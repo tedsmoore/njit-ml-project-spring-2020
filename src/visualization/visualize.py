@@ -30,7 +30,7 @@ class DisplayTicker():
 
         plt.plot(stock_open_price.index, stock_open_price, 'g', label = "Open Price")
         plt.plot(stock_open_price.index, stock_close_price, '--y', label = "Close Price")
-        plt.plot(stock_open_price_ma.index, stock_open_price_ma , 'b', label = "15 Day MOV")
+        plt.plot(stock_open_price_ma.index, stock_open_price_ma , 'b', label = "20 Day MOV")
         plt.legend(loc="upper left")
         plt.fill_between(stock_open_price_mstd.index,
                         stock_open_price_ma - 2 * stock_open_price_mstd,
