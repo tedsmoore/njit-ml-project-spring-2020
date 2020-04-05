@@ -11,7 +11,6 @@ class DisplayTicker():
         self._ticker = ticker
         self._name = name    
 
-
     def graph_stock(self):
         """
         Graphs the Stock stock
@@ -24,8 +23,8 @@ class DisplayTicker():
         
         plt.xlabel("Date")
         plt.ylabel("Price")
-        stock_open_price = pd.Series(self._ticker['Open'].to_numpy(), index=pd.date_range(self._ticker['Date'].iloc[0], periods=503, freq='D'))
-        stock_close_price = pd.Series(self._ticker['Close'].to_numpy(), index=pd.date_range(self._ticker['Date'].iloc[0], periods=503, freq='D'))
+        stock_open_price = pd.Series(self._ticker['Open'].to_numpy(), index=pd.date_range(self._ticker['Date'].iloc[0], periods=len(self._ticker), freq='D'))
+        stock_close_price = pd.Series(self._ticker['Close'].to_numpy(), index=pd.date_range(self._ticker['Date'].iloc[0], periods=len(self._ticker), freq='D'))
         stock_open_price_ma = stock_open_price.rolling(15).mean()
         stock_open_price_mstd = stock_open_price.rolling(15).std()
 
