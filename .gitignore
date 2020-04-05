@@ -137,3 +137,9 @@ dmypy.json
 
 # Apple Mac store
 .DS_Store/
+
+# VS Code project level settings
+.vscode/settings.json
+
+# data
+.data/
