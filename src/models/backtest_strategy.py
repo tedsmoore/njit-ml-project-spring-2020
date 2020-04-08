@@ -8,25 +8,25 @@ class TradeHoldStrategy(strategy.BacktestingStrategy):
     :param future_signals: numpy array of signals of the same length as the feed on which to trade
     """
 
-    def __init__(self, feed, instrument, future_signals, seed_trade=False):
+    def __init__(self, feed, instrument, future_signals, verbose=False):
         strategy.BacktestingStrategy.__init__(self, feed)
         self.instrument = instrument
         self.future_signals = future_signals
         self.adj_close = feed[instrument].getAdjCloseDataSeries()
         self.day = 0
-        self.seed_trade = seed_trade
         self.position = None
-
-    def onStart(self):
-        if self.seed_trade:
-            self.position = self.enterLong(self.instrument, 100)
+        self.verbose = verbose
 
     def onBars(self, bars):
         try:
             todays_signal = self.future_signals[self.day]
-            yesterdays_signal = self.future_signals[self.day - 1]
+            if self.day == 0:
+                yesterdays_signal = 0
+            else:
+                yesterdays_signal = self.future_signals[self.day - 1]
+
             if todays_signal > yesterdays_signal:
-                self.position = self.enterLong(self.instrument, 100, True)
+                self.position = self.enterLong(self.instrument, 100)
             elif todays_signal < yesterdays_signal:
                 self.position.exitMarket()
         except IndexError:
@@ -34,10 +34,14 @@ class TradeHoldStrategy(strategy.BacktestingStrategy):
         self.day += 1
 
     def onEnterOk(self, position):
-        execInfo = position.getEntryOrder().getExecutionInfo()
-        self.info("BUY at $%.2f" % (execInfo.getPrice()))
+        if self.verbose:
+            exec_info = position.getEntryOrder().getExecutionInfo()
+            self.info("BUY at $%.2f" % (exec_info.getPrice()))
 
     def onExitOk(self, position):
-        execInfo = position.getExitOrder().getExecutionInfo()
-        self.info("SELL at $%.2f" % (execInfo.getPrice()))
+        if self.verbose:
+            exec_info = position.getExitOrder().getExecutionInfo()
+            self.info("SELL at $%.2f" % (exec_info.getPrice()))
         self.position = None
+
+
