@@ -89,12 +89,12 @@ class StockTechnicals:
 
     def _future_sma_v_price(self, row, days=7):
         try:
-            future_sma = np.mean([self.data.loc[row.name + day + 1, 'Close'] for day in range(days)])
+            future_sma = np.mean([self.data.loc[row.name + day + 1, 'Adj Close'] for day in range(days)])
         except KeyError:
             return None
 
         try:
-            if future_sma > self.data.loc[row.name, 'Open']:
+            if future_sma > self.data.loc[row.name, 'Adj Close']:
                 return 1
             return 0
         except KeyError:
