@@ -143,3 +143,7 @@ dmypy.json
 
 # data
 .data/
+notebooks/.DS_Store
+.DS_Store
+.idea
+notebooks/scratch_david.ipynb
