@@ -16,14 +16,18 @@ class StockTechnicals:
 
     def __init__(self, data):
         self.data = data
-        self.features = ta.add_all_ta_features(
+        self._features = ta.add_all_ta_features(
             self.data,
             open="Open",
             high="High",
             low="Low",
             close="Close",
             volume="Volume"
-        ).drop(
+        )
+
+    @property
+    def features(self):
+        return self._features.drop(
             columns=[
                 "Date",
                 "Open",
@@ -39,6 +43,21 @@ class StockTechnicals:
 
     # Can add more derived metrics here
     # e.g. slopes, cross-overs
+    def add_slopes(self, metrics=(), days=()):
+        if not metrics:
+            metrics = list(self.features)
+        for m in metrics:
+            for d in days:
+                self._features[f"{m}_{d}_day_slope"] = self._features.apply(self._add_slope, metric=m, days=d, axis=1)
+
+    def _add_slope(self, row, metric, days=3):
+        if row.name < days + 1:
+            return None
+        x = np.arange(days)
+        A = np.vstack([x, np.ones(len(x))]).T
+        y = self._features.loc[row.name - days:row.name - 1, metric].values
+        slope, _ = np.linalg.lstsq(A, y)[0]
+        return slope
 
     # Possible Strategy labels
 
