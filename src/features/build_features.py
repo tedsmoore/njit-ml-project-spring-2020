@@ -56,7 +56,7 @@ class StockTechnicals:
         x = np.arange(days)
         A = np.vstack([x, np.ones(len(x))]).T
         y = self._features.loc[row.name - days:row.name - 1, metric].values
-        slope, _ = np.linalg.lstsq(A, y)[0]
+        slope, _ = np.linalg.lstsq(A, y, rcond=None)[0]
         return slope
 
     # Possible Strategy labels
