@@ -59,6 +59,18 @@ class StockTechnicals:
         slope, _ = np.linalg.lstsq(A, y, rcond=None)[0]
         return slope
 
+    def add_lags(self, metrics=(), days=()):
+        if not metrics:
+            metrics = list(self.features)
+        for m in metrics:
+            for d in days:
+                self._features[f"{m}_{d}_day_lag"] = self._features.apply(self._add_lag, metric=m, days=d, axis=1)
+
+    def _add_lag(self, row, metric, days=3):
+        if row.name < days + 1:
+            return None
+        return self._features.loc[row.name - days, metric]
+
     # Possible Strategy labels
 
     def price_will_rise(self, days=1):
